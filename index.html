@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-red: #c9184a;
+            --soft-pink: #ffb7c5;
+            --deep-burgundy: #590d22;
+            --bg-cream: #fff5f5;
+            --gold: #d4af37;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--deep-burgundy);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 20% 20%, #fff0f3 0%, transparent 40%),
+                              radial-gradient(circle at 80% 80%, #fff0f3 0%, transparent 40%);
+        }
+
+        /* POPUP OVERLAY - UNCHANGED */
+        #popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(89, 13, 34, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .popup-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .popup-card h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--rose-red);
+        }
+
+        /* MAIN PAGE - UNCHANGED */
+        .main-container {
+            text-align: center;
+            padding: 40px 25px;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(201, 24, 74, 0.1);
+            box-shadow: 0 20px 40px rgba(89, 13, 34, 0.05);
+            animation: fadeIn 1.2s ease-in;
+            position: relative;
+        }
+
+        .floating-rose {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            color: var(--rose-red);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .sub-text {
+            font-weight: 400;
+            margin-bottom: 35px;
+            color: var(--deep-burgundy);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: 1.5px solid var(--rose-red);
+            color: var(--rose-red);
+            padding: 16px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(201, 24, 74, 0.1);
+        }
+
+        .nav-btn:active {
+            background: var(--rose-red);
+            color: white;
+            transform: scale(0.95);
+        }
+
+        /* MODAL CONTENT STYLES - MODIFIED TO LOOK LIKE A CARD */
+        #message-modal {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 90%;
+            background: white;
+            border-radius: 40px 40px 0 0;
+            padding: 20px;
+            z-index: 200;
+            transition: bottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 0 -15px 50px rgba(89, 13, 34, 0.2);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-inner {
+            border: 2px solid var(--soft-pink);
+            border-radius: 25px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 360px;
+            height: auto;
+            background: #fff;
+            position: relative;
+            text-align: center;
+        }
+
+        .proposal-gif {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(201, 24, 74, 0.1);
+        }
+
+        .modal-content h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--rose-red);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: #333;
+        }
+
+        .close-modal {
+            margin-top: 25px;
+            color: white;
+            background: var(--rose-red);
+            border: none;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: block;
+            margin: 25px auto 0;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="popup-overlay">
+        <div class="popup-card">
+            <h2>Hi...</h2>
+            <p>I wanted to tell you something properly. Whenever you're ready, just tap below.</p>
+            <button class="nav-btn" style="margin-top: 20px; width: 100%; background: var(--rose-red); color: white;" onclick="closePopup()">Open Message</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <span class="floating-rose">🌹</span>
+        <h1>Propose Day</h1>
+        <p class="sub-text">February 8th • A Special Request</p>
+        
+        <div class="button-group">
+            <button class="nav-btn" onclick="openModal('propose')">Happy Propose Day</button>
+            <button class="nav-btn" onclick="openModal('restart')">A Request for "Us"</button>
+        </div>
+    </div>
+
+    <div id="message-modal">
+        <div class="card-inner">
+            <div class="modal-content" id="modal-text"></div>
+            <button class="close-modal" onclick="closeModal()">Close Message</button>
+        </div>
+    </div>
+
+    <script>
+        const messages = {
+            propose: `
+                <img src="https://www.creativefabrica.com/wp-content/uploads/2021/09/02/cute-couple-fall-in-love-silhouette-Graphics-16693751-1-1-580x387.jpg" class="proposal-gif" alt="Proposal">
+                <h2>Happy Propose Day 🌹</h2>
+                <p>I've never done this before, but my feelings are too strong to stay silent because you mean everything to me.</p>
+                <p>Will you be mine? Can we get together again and start everything fresh as new?</p>
+            `,
+            restart: `
+                <div style="font-size: 50px; margin-bottom: 15px;">✨</div>
+                <h2>Another Chance</h2>
+                <p>Hey... I'm writing this because I really want to make things right. I’ve realized where things went wrong, and I’m committed to doing better for us.</p>
+                <p>I’m asking for another try—not to go back to the past, but to start something fresh and healthy.</p>
+                <p><strong>Take all the time you need to think about it.</strong> I’m not in any rush, and I’ll be right here waiting patiently whenever you’re ready to talk.</p>
+            `
+        };
+
+        function closePopup() {
+            document.getElementById('popup-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('popup-overlay').style.display = 'none';
+            }, 500);
+        }
+
+        function openModal(type) {
+            document.getElementById('modal-text').innerHTML = messages[type];
+            document.getElementById('message-modal').style.bottom = '0';
+        }
+
+        function closeModal() {
+            document.getElementById('message-modal').style.bottom = '-100%';
+        }
+    </script>
+</body>
+</html>
